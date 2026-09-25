@@ -1,0 +1,806 @@
+// =============================================================================
+// ESTILOS GLOBALES - Angular SSR Optimization
+// Sistema de diseño con variables CSS, reset, tipografía y utilidades responsive
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// 1. VARIABLES CSS - Sistema de diseño del proyecto
+// -----------------------------------------------------------------------------
+:root {
+  // Colores primarios - Paleta de marca
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-primary-light: #3b82f6;
+  --color-primary-50: #eff6ff;
+
+  // Colores secundarios
+  --color-secondary: #059669;
+  --color-secondary-dark: #047857;
+  --color-secondary-light: #10b981;
+
+  // Colores neutros - Escalas de grises
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  // Colores semánticos - Estados yfeedback
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  // Espaciado - Sistema de 4px
+  --spacing-xs: 0.25rem;   // 4px
+  --spacing-sm: 0.5rem;    // 8px
+  --spacing-md: 1rem;      // 16px
+  --spacing-lg: 1.5rem;    // 24px
+  --spacing-xl: 2rem;      // 32px
+  --spacing-2xl: 3rem;     // 48px
+  --spacing-3xl: 4rem;     // 64px
+
+  // Tipografía
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-heading: 'Inter', sans-serif;
+  --font-family-mono: 'Fira Code', 'Monaco', 'Consolas', monospace;
+
+  --font-size-xs: 0.75rem;    // 12px
+  --font-size-sm: 0.875rem;   // 14px
+  --font-size-base: 1rem;     // 16px
+  --font-size-lg: 1.125rem;   // 18px
+  --font-size-xl: 1.25rem;    // 20px
+  --font-size-2xl: 1.5rem;    // 24px
+  --font-size-3xl: 1.875rem;  // 30px
+  --font-size-4xl: 2.25rem;   // 36px
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  // Sombras
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  // Radios de borde
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+
+  // Transiciones
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+
+  // Z-index
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}
+
+// -----------------------------------------------------------------------------
+// 2. RESET CSS - Normalización cross-browser
+// -----------------------------------------------------------------------------
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.6;
+  color: var(--color-gray-800);
+  background-color: var(--color-gray-50);
+  min-height: 100vh;
+}
+
+// -----------------------------------------------------------------------------
+// 3. TIPOGRAFÍA - Encabezados y elementos de texto
+// -----------------------------------------------------------------------------
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.3;
+  color: var(--color-gray-900);
+  margin-bottom: var(--spacing-md);
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+}
+
+h5 {
+  font-size: var(--font-size-lg);
+}
+
+h6 {
+  font-size: var(--font-size-base);
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+  max-width: 70ch;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// 4. SISTEMA DE REJILLA - Grid y Flexbox utilities
+// -----------------------------------------------------------------------------
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+
+  @media (min-width: 640px) {
+    padding: 0 var(--spacing-lg);
+  }
+
+  @media (min-width: 1024px) {
+    padding: 0 var(--spacing-xl);
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 calc(var(--spacing-md) * -1);
+}
+
+.col {
+  flex: 1 1 0%;
+  padding: 0 var(--spacing-md);
+}
+
+// Grid con 12 columnas
+.grid {
+  display: grid;
+  gap: var(--spacing-md);
+
+  &--cols-1 { grid-template-columns: repeat(1, 1fr); }
+  &--cols-2 { grid-template-columns: repeat(2, 1fr); }
+  &--cols-3 { grid-template-columns: repeat(3, 1fr); }
+  &--cols-4 { grid-template-columns: repeat(4, 1fr); }
+  &--cols-6 { grid-template-columns: repeat(6, 1fr); }
+
+  @media (max-width: 1023px) {
+    &--cols-4, &--cols-6 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 639px) {
+    &--cols-2, &--cols-3, &--cols-4, &--cols-6 {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// Flexbox utilities
+.flex {
+  display: flex;
+
+  &--row { flex-direction: row; }
+  &--column { flex-direction: column; }
+  &--wrap { flex-wrap: wrap; }
+  &--nowrap { flex-wrap: nowrap; }
+
+  &--start { justify-content: flex-start; }
+  &--center { justify-content: center; }
+  &--end { justify-content: flex-end; }
+  &--between { justify-content: space-between; }
+  &--around { justify-content: space-around; }
+
+  &--align-start { align-items: flex-start; }
+  &--align-center { align-items: center; }
+  &--align-end { align-items: flex-end; }
+  &--align-stretch { align-items: stretch; }
+}
+
+// Gap utilities
+.gap {
+  &--xs { gap: var(--spacing-xs); }
+  &--sm { gap: var(--spacing-sm); }
+  &--md { gap: var(--spacing-md); }
+  &--lg { gap: var(--spacing-lg); }
+  &--xl { gap: var(--spacing-xl); }
+}
+
+// -----------------------------------------------------------------------------
+// 5. COMPONENTES BASE - Botones, formularios, tablas
+// -----------------------------------------------------------------------------
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &--primary {
+    background-color: var(--color-primary);
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-primary-dark);
+    }
+  }
+
+  &--secondary {
+    background-color: var(--color-secondary);
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-secondary-dark);
+    }
+  }
+
+  &--outline {
+    background-color: transparent;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-primary-50);
+    }
+  }
+
+  &--sm {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--font-size-sm);
+  }
+
+  &--lg {
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: var(--font-size-lg);
+  }
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  color: var(--color-gray-800);
+  background-color: white;
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  &::placeholder {
+    color: var(--color-gray-400);
+  }
+
+  &:disabled {
+    background-color: var(--color-gray-100);
+    cursor: not-allowed;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// 6. UTILIDADES - Helpers comunes
+// -----------------------------------------------------------------------------
+.text {
+  &--primary { color: var(--color-primary); }
+  &--secondary { color: var(--color-gray-600); }
+  &--success { color: var(--color-success); }
+  &--warning { color: var(--color-warning); }
+  &--error { color: var(--color-error); }
+  &--center { text-align: center; }
+  &--left { text-align: left; }
+  &--right { text-align: right; }
+}
+
+.bg {
+  &--white { background-color: white; }
+  &--gray-50 { background-color: var(--color-gray-50); }
+  &--gray-100 { background-color: var(--color-gray-100); }
+  &--primary { background-color: var(--color-primary); color: white; }
+}
+
+.m {
+  &--0 { margin: 0; }
+  &--auto { margin: auto; }
+  &t--md { margin-top: var(--spacing-md); }
+  &b--md { margin-bottom: var(--spacing-md); }
+  &y--md { margin-top: var(--spacing-md); margin-bottom: var(--spacing-md); }
+}
+
+.p {
+  &--0 { padding: 0; }
+  &--md { padding: var(--spacing-md); }
+  &--lg { padding: var(--spacing-lg); }
+  &--xl { padding: var(--spacing-xl); }
+}
+
+// Visibilidad
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.d-none { display: none; }
+.d-block { display: block; }
+.d-inline { display: inline; }
+.d-inline-block { display: inline-block; }
+
+// Responsive utilities
+@media (max-width: 639px) {
+  .hide-mobile { display: none !important; }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .hide-tablet { display: none !important; }
+}
+
+@media (min-width: 1024px) {
+  .hide-desktop { display: none !important; }
+}
+
+// -----------------------------------------------------------------------------
+// 7. ESTADOS DE CARGA - Skeleton y spinners
+// -----------------------------------------------------------------------------
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-gray-200) 25%,
+    var(--color-gray-100) 50%,
+    var(--color-gray-200) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid var(--color-gray-200);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// -----------------------------------------------------------------------------
+// 8. ACCESIBILIDAD - Focus states y utilidades ARIA
+// -----------------------------------------------------------------------------
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+[tabindex="-1"]:focus:not(:focus-visible) {
+  outline: none;
+}
+
+// Skip link para navegación por teclado
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-primary);
+  color: white;
+  z-index: var(--z-tooltip);
+  transition: top var(--transition-fast);
+
+  &:focus {
+    top: 0;
+  }
+}
+"// === ARCHIVO: server.ts ===
+// =============================================================================
+// SERVIDOR EXPRESS - Angular Universal SSR
+// Maneja el renderizado del lado del servidor para Angular
+// =============================================================================
+
+import 'zone.js/node';
+
+import { APP_BASE_HREF } from '@angular/common';
+import { ngExpressEngine } from '@angular/ssr';
+import * as express from 'express';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { AppServerModule } from './src/main.server';
+
+// El usuario de aplicación Express
+export function app(): express.Express {
+  const server = express();
+  const distFolder = join(process.cwd(), 'dist/angular-ssr-optimization/browser');
+  const serverDistFolder = join(process.cwd(), 'dist/angular-ssr-optimization/server');
+
+  // Configurar el motor de Angular Universal para Express
+  // ngExpressEngine transforma las páginas Angular en HTML renderizado en el servidor
+  server.engine('html', ngExpressEngine({
+    bootstrap: AppServerModule,
+    inlineCriticalCss: true,
+    providers: [
+      // Provee la ruta base de la aplicación
+      { provide: APP_BASE_HREF, useValue: '/' }
+    ]
+  }));
+
+  // Configurar motor de vistas
+  server.set('view engine', 'html');
+  server.set('views', distFolder);
+
+  // Middleware para servir archivos estáticos desde la carpeta del browser
+  // Esto incluye: CSS, JavaScript, imágenes, fuentes y otros assets estáticos
+  server.use('**', express.static(distFolder, {
+    maxAge: '1y',
+    // Habilitar Cache-Control para producción
+    setHeaders: (res, path) => {
+      if (path.endsWith('.html')) {
+        res.setHeader('Cache-Control', 'no-cache');
+      } else if (path.match(/\.(js|css)$/)) {
+        res.setHeader('Cache-Control', 'public, max-age=31536000');
+      }
+    }
+  }));
+
+  // Servir archivos estáticos del servidor (para SSR)
+  server.use('**', express.static(serverDistFolder, {
+    maxAge: '1h'
+  }));
+
+  // Rutas específicas para assets con cache optimizado
+  server.use('/assets', express.static(join(distFolder, 'assets'), {
+    maxAge: '1y'
+  }));
+
+  // Manejo de favicon con cache largo
+  server.use('/favicon.ico', express.static(join(distFolder, 'favicon.ico'), {
+    maxAge: '1y'
+  }));
+
+  // Punto de entrada principal: todas las rutas未知 (excepto API)
+  // son manejadas por Angular Universal para SSR
+  server.get('*', (req: express.Request, res: express.Response) => {
+    // El motor ngExpressEngine renderiza la aplicación Angular
+    // y devuelve HTML completo con los datos del servidor ya renderizados
+    res.render('index', {
+      req,
+      res,
+      // Proveer datos adicionales para la plantilla
+      providers: [
+        { provide: 'REQUEST', useValue: req },
+        { provide: 'RESPONSE', useValue: res }
+      ]
+    });
+  });
+
+  return server;
+}
+
+// Función para iniciar el servidor
+function run(): void {
+  const port = process.env['PORT'] || 4000;
+
+  // Verificar que la carpeta de distribución existe antes de iniciar
+  const distFolder = join(process.cwd(), 'dist/angular-ssr-optimization/browser');
+  if (!existsSync(distFolder)) {
+    console.error(
+      `\n⚠️  ERROR: No se encontró la carpeta de distribución.\n` +
+      `   Ejecuta 'npm run build:ssr' antes de iniciar el servidor SSR.\n` +
+      `   Ruta esperada: ${distFolder}\n`
+    );
+    process.exit(1);
+  }
+
+  // Crear y iniciar el servidor Express
+  const server = app();
+  server.listen(port, () => {
+    console.log(
+      `\n🌐  Servidor SSR de Angular Universal escuchando en http://localhost:${port}\n` +
+      `   Modo: Server-Side Rendering (SSR)\n` +
+      `   Render: ${process.env['NODE_ENV'] || 'development'}\n` +
+      `   Presione Ctrl+C para detener el servidor\n`
+    );
+  });
+}
+
+// Ejecutar la aplicación
+// Webpack reemplazará 'require' con '__webpack_require__'
+// Esto permite que el código funcione tanto en desarrollo como en producción
+declare const __non_webpack_require__: NodeRequire;
+const mainModule = __non_webpack_require__.main;
+const moduleFilename = mainModule && mainModule.filename || '';
+
+if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
+  run();
+}
+
+export * from './src/main.server';
+"// === ARCHIVO: README.md ===
+# Angular SSR Optimization
+
+Aplicación de comercio electrónico construida con Angular 20 que implementa Server-Side Rendering (SSR) mediante Angular Universal para optimizar el rendimiento de carga inicial y mejorar el SEO.
+
+## 🚀 Características Principales
+
+- **Server-Side Rendering (SSR)**: Renderizado del lado del servidor para tiempos de carga iniciales más rápidos
+- **Client-Side Rendering (CSR)**: Modo tradicional para navegación fluida después de la carga inicial
+- **Angular Universal**: Integración nativa de SSR con Express.js
+- **TransferState**: Compartición de estado entre servidor y cliente para evitar solicitudes duplicadas
+- **Hydration**: Rehabilitación no destructiva del contenido renderizado en servidor
+- **Pre-render**: Generación estática de rutas específicas para máximo rendimiento
+
+## 📋 Requisitos Previos
+
+- Node.js versión 20.x o superior
+- npm versión 9.x o superior
+- Angular CLI versión 20.2.0
+
+Verifica tu versión de Node.js:
+```bash
+node --version
+```
+
+Verifica tu versión de npm:
+```bash
+npm --version
+```
+
+## 🛠️ Instalación
+
+1. Clona el repositorio o extrae los archivos del proyecto
+2. Instala las dependencias del proyecto:
+
+```bash
+npm install
+```
+
+Este comando leerá el `package.json` e instalará todas las dependencias necesarias incluyendo:
+- Angular framework y dependencias
+- Express.js para el servidor SSR
+- Angular Universal para SSR
+- Herramientas de desarrollo (TypeScript, Karma, etc.)
+
+## 📖 Modos de Ejecución
+
+### Client-Side Rendering (CSR) - Desarrollo
+
+El modo CSR tradicional de Angular donde la aplicación se ejecuta completamente en el navegador:
+
+```bash
+npm start
+# o
+ng serve
+```
+
+Accede a: `http://localhost:4200`
+
+Este modo es ideal para desarrollo rápido ya que no requiere compilación del servidor.
+
+### Server-Side Rendering (SSR) - Desarrollo
+
+El modo SSR que renderiza la aplicación en el servidor antes de enviarla al cliente:
+
+```bash
+npm run dev:ssr
+```
+
+Accede a: `http://localhost:4000`
+
+Este comando:
+1. Compila la aplicación del cliente (browser)
+2. Compila la aplicación del servidor
+3. Inicia el servidor Express con Angular Universal
+4. Renderiza las páginas en el servidor
+
+### Server-Side Rendering (SSR) - Producción
+
+Para ejecutar en modo producción con optimizaciones:
+
+```bash
+# Paso 1: Compilar aplicación completa (cliente + servidor)
+npm run build:ssr
+
+# Paso 2: Ejecutar el servidor SSR compilado
+npm run serve:ssr
+```
+
+Accede a: `http://localhost:4000`
+
+### Pre-render de Rutas Estáticas
+
+Genera páginas HTML estáticas para rutas específicas:
+
+```bash
+npm run prerender
+```
+
+Las rutas a pre-renderizar están configuradas en `angular.json`:
+- `/` (página principal)
+- `/product-list` (lista de productos)
+
+## 📦 Scripts Disponibles
+
+| Script | Descripción |
+|--------|-------------|
+| `npm start` | Inicia el servidor de desarrollo CSR |
+| `npm run dev:ssr` | Inicia el servidor de desarrollo con SSR |
+| `npm run build` | Compila la aplicación para producción (solo cliente) |
+| `npm run build:ssr` | Compila la aplicación completa con SSR |
+| `npm run serve:ssr` | Ejecuta el servidor SSR compilado |
+| `npm run prerender` | Genera páginas estáticas |
+| `npm run test` | Ejecuta las pruebas unitarias con Karma |
+
+## 🏗️ Arquitectura del Proyecto
+
+```
+angular-ssr-optimization/
+├── src/
+│   ├── app/
+│   │   ├── core/              # Módulo core (servicios, configuraciones)
+│   │   │   ├── services/      # Servicios de dominio (ProductService)
+│   │   │   └── core.module.ts # Configuración de providers
+│   │   ├── features/          # Componentes de características
+│   │   │   └── product-list/  # Lista de productos
+│   │   ├── shared/            # Componentes compartidos
+│   │   │   └── components/    # Componentes reutilizables
+│   │   ├── app.module.ts      # Módulo principal de la aplicación
+│   │   ├── app.config.ts      # Configuración de providers
+│   │   └── app.server.module.ts # Módulo para SSR
+│   ├── styles.scss            # Estilos globales
+│   ├── main.ts                # Entry point del cliente
+│   └── main.server.ts         # Entry point del servidor
+├── server.ts                  # Servidor Express para SSR
+├── angular.json               # Configuración de Angular CLI
+├── package.json               # Dependencias del proyecto
+└── tsconfig.json              # Configuración de TypeScript
+```
+
+## 🔄 Diferencias entre CSR, SSR y Pre-render
+
+### Client-Side Rendering (CSR)
+- La aplicación se carga vacía en el navegador
+- JavaScript genera el contenido HTML
+- **Ventajas**: Interactividad inmediata después de carga, menor carga en servidor
+- **Desventajas**: Primer contenido visible más lento, SEO limitado
+
+### Server-Side Rendering (SSR)
+- El servidor genera el HTML completo antes de enviarlo
+- El navegador recibe contenido visible inmediatamente
+- **Ventajas**: First Contentful Paint (FCP) más rápido, mejor SEO
+- **Desventajas**: Mayor carga en servidor, TTFB (Time To First Byte) puede aumentar
+
+### Pre-render
+- Las páginas se generan en tiempo de compilación como archivos HTML estáticos
+- Se sirve como archivos estáticos sin procesamiento
+- **Ventajas**: Tiempo de respuesta mínimo, máximo rendimiento
+- **Desventajas**: Solo para contenido estático, no personalizado
+
+## ⚡ Optimizaciones Implementadas
+
+1. **TransferState**: Evita solicitudes HTTP duplicadas entre servidor y cliente
+2. **Hydration No Destructiva**: Reutiliza el DOM del servidor en el cliente
+3. **CSS Inlining**: CSS crítico en línea para evitar FOUC (Flash of Unstyled Content)
+4. **Lazy Loading**: Carga diferida de módulos no críticos
+5. **Cache de Assets**: Archivos estáticos con cache optimizado
+
+## 🔧 Configuración de Producción
+
+El servidor Express (`server.ts`) incluye optimizaciones de producción:
+
+- **Cache de archivos estáticos**: 1 año para assets immutables
+- **Cache de JavaScript y CSS**: 1 año con hash en nombre
+- **HTML sin cache**: Siempre fresco para contenido dinámico
+- **Compresión**: Configurable mediante middleware de Express
+
+## 📝 Variables de Entorno
+
+| Variable | Descripción | Valor por defecto |
+|----------|-------------|-------------------|
+| `PORT` | Puerto del servidor SSR | `4000` |
+| `NODE_ENV` | Entorno de ejecución | `development` |
+
+Ejemplo:
+```bash
+PORT=3000 NODE_ENV=production npm run serve:ssr
+```
+
+## 🧪 Pruebas
+
+Ejecutar pruebas unitarias:
+```bash
+npm run test
+```
+
+Las pruebas están configuradas con Karma y Jasmine. Los archivos de prueba tienen extensión `.spec.ts`.
+
+## 📄 Licencia
+
+Este proyecto es parte del curso de optimización de renderizado en Angular. Todos los derechos reservados.
